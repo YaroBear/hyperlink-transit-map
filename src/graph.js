@@ -1,7 +1,6 @@
 class Graph {
     constructor() {
         this.nodes = new Map();
-        this.paths = [];
     }
 
     addEdge(sourceValue, destinationValue) {
@@ -21,22 +20,24 @@ class Graph {
         }
     }
 
+    getNode(value) {
+        return this.nodes.get(value);
+    }
+
     isLeaf(node) {
         return node.adjacentNodes.length == 0;
     }
 
-    findAllPathsDfs(currentNode, path) {
-        if (path) {
-            path.push(currentNode);
-        } else {
-            path = [];
-        }
+    findAllPathsFromNodeDfs(currentNode, path = [], paths = []) {
+        path.push(currentNode);
 
         if (this.isLeaf(currentNode)) {
-            this.paths.push([...path]);
+            paths.push([...path]);
         }
         for (let node of currentNode.getAdjacentNodes()) {
-            this.findAllPathsDfs(node, [...path]);
+            this.findAllPathsFromNodeDfs(node, [...path], paths);
         }
+
+        return paths;
     }
 }

@@ -10,3 +10,4 @@ Work in progress:
 
 -   No two nodes can share the same position
 -   Avoid loops; e.g. following links back to nodes that have already been explored
+-   Don't follow external links (start origin)
