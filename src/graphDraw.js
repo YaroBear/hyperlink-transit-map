@@ -1,9 +1,8 @@
 class GraphDraw {
-    constructor(graph, ctx) {
+    constructor(ctx) {
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, 800, 800);
 
-        this.graph = graph;
         this.drawnNodes = new Map();
         this.ctx = ctx;
         this.neonColors = [

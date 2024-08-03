@@ -3,7 +3,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     const ctx = transitMapCanvas.getContext("2d");
 
     const graph = new Graph();
-    const graphDraw = new GraphDraw(graph, ctx);
+    const graphDraw = new GraphDraw(ctx);
 
     const currentLocation = window.location.href;
     const addEdge = (fromHref, toHref) => {
