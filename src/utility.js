@@ -23,7 +23,9 @@ class RandomWalk2d {
         const directionRadians = RandomWalk2d.mapToRadians(directionInt);
         const walkOffsetX = magnitude * Math.cos(directionRadians);
         const walkOffsetY = magnitude * Math.sin(directionRadians);
+        const newPointX = Math.floor(point.x + walkOffsetX);
+        const newPointY = Math.floor(point.y + walkOffsetY);
 
-        return new Point(point.x + walkOffsetX, point.y + walkOffsetY);
+        return new Point(newPointX, newPointY);
     }
 }

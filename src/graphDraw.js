@@ -20,15 +20,33 @@ class GraphDraw {
         this.drawnNodes.set(parentNode.value, newDrawnNode);
     }
 
+    walkToNewPoint(previousNode) {
+        const newPosition = RandomWalk2d.getNextRandomPosition({
+            x: previousNode.x,
+            y: previousNode.y,
+        });
+
+        let positionTaken = false;
+
+        this.drawnNodes.forEach((node, key, map) => {
+            if (node.x == newPosition.x && node.y == newPosition.y) {
+                positionTaken = true;
+            }
+        });
+
+        if (positionTaken) {
+            return this.walkToNewPoint(previousNode);
+        }
+
+        return newPosition;
+    }
+
     createDrawnNodesFromPaths(paths) {
         for (const path of paths) {
             for (let i = 0; i < path.length; i++) {
                 if (!this.drawnNodes.has(path[i].value) && i > 0) {
                     const previousNode = this.drawnNodes.get(path[i - 1].value);
-                    const newPosition = RandomWalk2d.getNextRandomPosition({
-                        x: previousNode.x,
-                        y: previousNode.y,
-                    });
+                    const newPosition = this.walkToNewPoint(previousNode);
                     const newDrawnNode = new NodeDraw(
                         path[i],
                         newPosition.x,
