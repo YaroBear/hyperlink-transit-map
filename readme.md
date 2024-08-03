@@ -2,6 +2,10 @@
 
 0 dependencies, vanilla Javascript site crawler and visualizer.
 
-Working in progress:
+Work in progress:
 
 ![example.png](./example.png)
+
+## Todo
+
+-   No two nodes can share the same position
