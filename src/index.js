@@ -1,63 +1,3 @@
-class Node {
-    constructor(value) {
-        this.value = value;
-        this.adjacentNodes = [];
-    }
-
-    addAdjacentNode(node) {
-        this.adjacentNodes.push(node);
-    }
-
-    getAdjacentNodes() {
-        return this.adjacentNodes;
-    }
-}
-
-class Graph {
-    constructor() {
-        this.nodes = new Map();
-        this.paths = [];
-    }
-
-    addEdge(sourceValue, destinationValue) {
-        const sourceNode = this.addNode(sourceValue);
-        const destinationNode = this.addNode(destinationValue);
-
-        sourceNode.addAdjacentNode(destinationNode);
-    }
-
-    addNode(value) {
-        if (this.nodes.has(value)) {
-            return this.nodes.get(value);
-        } else {
-            const node = new Node(value);
-            this.nodes.set(value, node);
-            return node;
-        }
-    }
-
-    isLeaf(node) {
-        return node.adjacentNodes.length == 0;
-    }
-
-    findAllPathsDfs(currentNode, path) {
-        if (path) {
-            path.push(currentNode);
-        } else {
-            path = [];
-        }
-
-        if (this.isLeaf(currentNode)) {
-            this.paths.push([...path]);
-        }
-        for (let node of currentNode.getAdjacentNodes()) {
-            this.findAllPathsDfs(node, [...path]);
-        }
-    }
-}
-
-const neonColors = ["#af3dff", "#55ffe1", "#ff3b94", "#a6fd29", "#ff5733"];
-
 class GraphDraw {
     constructor(graph, ctx) {
         this.graph = graph;
@@ -205,23 +145,6 @@ class RandomWalk2d {
     }
 }
 
-const graph = new Graph();
-
-const crawlLinks = async (currentNodeValue, doc) => {
-    const anchors = doc.getElementsByTagName("a");
-    for (const anchor of anchors) {
-        graph.addEdge(currentNodeValue, anchor.href);
-
-        const response = await fetch(anchor.href);
-        const html = await response.text();
-
-        const parser = new DOMParser();
-        const loadedDoc = parser.parseFromString(html, "text/html");
-
-        await crawlLinks(anchor.href, loadedDoc);
-    }
-};
-
 window.addEventListener("DOMContentLoaded", async () => {
     const transitMapCanvas = document.getElementById("transit-map");
     const ctx = transitMapCanvas.getContext("2d");
@@ -229,12 +152,16 @@ window.addEventListener("DOMContentLoaded", async () => {
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, 800, 800);
 
+    const graph = new Graph();
+
     const currentLocation = window.location.href;
-    await crawlLinks(currentLocation, document);
+    const addEdge = (fromHref, toHref) => {
+        graph.addEdge(fromHref, toHref);
+    };
+    await crawlLinks(addEdge, currentLocation, document);
 
     const startNode = graph.nodes.get(currentLocation);
     graph.findAllPathsDfs(startNode, []);
-    console.log(graph.paths);
 
     const graphDraw = new GraphDraw(graph, ctx);
     graphDraw.draw();
