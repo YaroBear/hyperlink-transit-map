@@ -2,6 +2,8 @@
 
 0 dependencies, vanilla Javascript site crawler and visualizer.
 
+Inspired by [Public Transit Neocities](https://publictransit.neocities.org/map)
+
 Work in progress:
 
 ![example.png](./example.png)
