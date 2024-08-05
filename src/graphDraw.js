@@ -29,7 +29,12 @@ class GraphDraw {
         let positionTaken = false;
 
         this.drawnNodes.forEach((node, key, map) => {
-            if (node.x == newPosition.x && node.y == newPosition.y) {
+            if (
+                node.x - 50 <= newPosition.x &&
+                node.x + 50 >= newPosition.x &&
+                node.y - 50 <= newPosition.y &&
+                node.y + 50 >= newPosition.y
+            ) {
                 positionTaken = true;
             }
         });

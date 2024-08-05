@@ -6,25 +6,13 @@ class Point {
 }
 
 class RandomWalk2d {
-    // 0-7
-    static getRandomInt(max = 7) {
-        return Math.floor(Math.random() * max);
-    }
-
-    // degrees: 0, 45, 90, 135, 180, 225, 270, 315
-    static mapToRadians(number) {
-        const degreeIncrements = 45;
-        return degreeIncrements * number * (Math.PI / 180);
-    }
-
     static getNextRandomPosition(point) {
         const magnitude = 100;
-        const directionInt = RandomWalk2d.getRandomInt();
-        const directionRadians = RandomWalk2d.mapToRadians(directionInt);
+        const directionRadians = (Math.floor(Math.random() * 8) / 4) * Math.PI;
         const walkOffsetX = magnitude * Math.cos(directionRadians);
         const walkOffsetY = magnitude * Math.sin(directionRadians);
-        const newPointX = Math.floor(point.x + walkOffsetX);
-        const newPointY = Math.floor(point.y + walkOffsetY);
+        const newPointX = point.x + walkOffsetX;
+        const newPointY = point.y + walkOffsetY;
 
         return new Point(newPointX, newPointY);
     }
