@@ -16,15 +16,13 @@ class GraphDraw {
 
     createParentDrawnNode(paths) {
         const parentNode = paths[0][0];
-        const newDrawnNode = new NodeDraw(parentNode, 400, 400);
+        const newDrawnNode = new NodeDraw(parentNode, 400, 400, 0);
         this.drawnNodes.set(parentNode.value, newDrawnNode);
     }
 
     walkToNewPoint(previousNode) {
-        const newPosition = RandomWalk2d.getNextRandomPosition({
-            x: previousNode.x,
-            y: previousNode.y,
-        });
+        const newPosition =
+            RandomWalk2d.getNextRandomPositionBiased(previousNode);
 
         let positionTaken = false;
 
@@ -55,7 +53,8 @@ class GraphDraw {
                     const newDrawnNode = new NodeDraw(
                         path[i],
                         newPosition.x,
-                        newPosition.y
+                        newPosition.y,
+                        newPosition.angle
                     );
                     this.drawnNodes.set(path[i].value, newDrawnNode);
                 }

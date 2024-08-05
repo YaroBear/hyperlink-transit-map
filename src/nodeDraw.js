@@ -1,8 +1,9 @@
 class NodeDraw {
-    constructor(node, x, y) {
+    constructor(node, x, y, angle) {
         this.node = node;
         this.x = x;
         this.y = y;
+        this.angle = angle;
     }
 
     drawStrokedText = (ctx, text, x, y) => {
